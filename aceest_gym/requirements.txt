@@ -1,0 +1,6 @@
+Flask
+pymongo
+pytest
+requests
+gunicorn
+python-dotenv

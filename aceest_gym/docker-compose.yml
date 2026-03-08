@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+  flask-app:
+    build: .
+    container_name: gym_app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+
+  mongodb:
+    image: mongo:7
+    container_name: gym_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: gym_jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+volumes:
+  mongo_data:
+  jenkins_home:
