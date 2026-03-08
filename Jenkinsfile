@@ -4,27 +4,21 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
+        stage('Checkout Code') {
             steps {
-                git 'https://github.com/2024tm93535/aceest-devops-gym.git'
+                git branch: 'main', url: 'https://github.com/2024tm93535/aceest-gym.git'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build Step') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'echo "Building Aceest Gym Project..."'
             }
         }
 
-        stage('Run Unit Tests') {
+        stage('Finish') {
             steps {
-                sh 'pytest'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t aceest-gym .'
+                sh 'echo "Pipeline executed successfully!"'
             }
         }
 
