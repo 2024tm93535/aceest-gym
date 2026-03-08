@@ -7,8 +7,10 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .   
 
     services:
       mongo:
@@ -28,6 +30,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Tests
