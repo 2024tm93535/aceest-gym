@@ -1,5 +1,6 @@
 Aceest Gym Management System – CI/CD Pipeline
 
+
 🚀 Project Overview
 
 The Aceest Gym Management System is a Flask-based backend application that manages gym member information, including:
@@ -44,8 +45,10 @@ git clone https://github.com/2024tm93535/aceest-gym.git
 cd aceest-gym
 2. Create Virtual Environment (Optional)
 python -m venv venv
+
 # Linux / Mac
 source venv/bin/activate
+
 # Windows
 venv\Scripts\activate
 3. Install Dependencies
@@ -184,4 +187,4 @@ Security scanning & vulnerability checks
 📌 Conclusion
 
 This project demonstrates a professional CI/CD pipeline for a Flask-based application.
-The integration of GitHub, Jenkins, automated testing, and Docker enables a reliable, automated, and modern development workflow.
+Integration of GitHub, Jenkins, automated testing, and Docker enables a reliable, automated, and modern development workflow.
