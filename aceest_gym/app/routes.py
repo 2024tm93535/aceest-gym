@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from db import members_collection, workouts_collection
+from aceest_gym.app.db import members_collection, workouts_collection
 from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 

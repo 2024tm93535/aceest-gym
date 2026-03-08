@@ -1,5 +1,5 @@
 from flask import Flask
-from routes import gym_routes
+from aceest_gym.app.routes import gym_routes
 
 def create_app():
 

@@ -1,5 +1,5 @@
 import pytest
-from app.app import create_app
+from aceest_gym.app.app import create_app
 
 
 @pytest.fixture
@@ -26,7 +26,8 @@ def test_add_member(client):
         "name": "Alice",
         "age": 24,
         "weight": 60,
-        "membership": "Gold"
+        "membership": "Gold",
+        "height":"1.5"
     })
 
     assert response.status_code == 200
