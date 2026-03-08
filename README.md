@@ -1,82 +1,63 @@
-# Aceest Gym Management System – CI/CD Pipeline
+Aceest Gym Management System – CI/CD Pipeline
 
-## Project Overview
+🚀 Project Overview
 
-The Aceest Gym Management System is a backend application built using Flask that manages gym member information such as age, height, weight, membership type, and membership expiry date.
+The Aceest Gym Management System is a Flask-based backend application that manages gym member information, including:
 
-This project demonstrates the implementation of DevOps practices using Continuous Integration and Continuous Deployment (CI/CD). The repository integrates automated testing, containerization, and pipeline automation using tools such as Jenkins, GitHub Actions, and Docker.
+Age, height, weight
 
-The goal of this project is to automate the process of building, testing, and validating application code whenever changes are pushed to the repository.
+Membership type
 
----
+Membership expiry date
 
-## Repository Structure
+This project demonstrates modern DevOps practices with Continuous Integration (CI) and Continuous Deployment (CD) using GitHub Actions, Jenkins, and Docker.
+The goal is to automate building, testing, and validating application code whenever changes are pushed to the repository.
 
-
+📂 Repository Structure
 aceest-gym/
 ├── aceest_gym/
-│ ├── init.py
-│ ├── app/
-│ │ ├── init.py
-│ │ └── app.py
-│ └── routes.py
+│   ├── __init__.py
+│   ├── app/
+│   │   ├── __init__.py
+│   │   └── app.py
+│   └── routes.py
 ├── test/
-│ └── test_app.py
+│   └── test_app.py
 ├── requirements.txt
 ├── Dockerfile
 ├── README.md
 ├── Jenkinsfile
 └── .github/
-└── workflows/
-└── main.yml
+    └── workflows/
+        └── main.yml
+🔗 API Endpoints
+Route	Method	Description	Sample Response
+/	GET	Check API status	{"message": "ACEest Gym DevOps API running"}
+/status	GET	Check system health	{"status": "ok"}
 
+Example Request:
 
----
-
-## API Endpoints
-
-| Route     | Method | Description                  | Sample Response                          |
-|-----------|--------|-----------------------------|------------------------------------------|
-| `/`       | GET    | Check API status            | `{"message": "ACEest Gym DevOps API running"}` |
-| `/status` | GET    | Check system health         | `{"status": "ok"}`                        |
-
-**Example Request:**
-
-```bash
 curl http://localhost:5000/
-Local Setup Instructions
-
-Follow these steps to run the application locally:
-
-Clone the Repository
-
+💻 Local Setup Instructions
+1. Clone the Repository
 git clone https://github.com/2024tm93535/aceest-gym.git
 cd aceest-gym
-
-Create Virtual Environment (Optional)
-
+2. Create Virtual Environment (Optional)
 python -m venv venv
 # Linux / Mac
 source venv/bin/activate
 # Windows
 venv\Scripts\activate
-
-Install Dependencies
-
+3. Install Dependencies
 pip install -r requirements.txt
-
-Run the Application
-
+4. Run the Application
 flask run
 
-The application will start on:
+Access the app at: http://localhost:5000
 
-http://localhost:5000
-Running Tests Manually
+✅ Running Tests
 
-Automated tests are included using Pytest.
-
-Run tests with:
+The project uses Pytest for automated testing.
 
 pytest
 
@@ -84,48 +65,36 @@ Example Output:
 
 tests/test_app.py
 1 passed
-
-This confirms that the application functionality is validated through automated testing.
-
-Docker Setup
-
-The project includes a Dockerfile to containerize the application.
-
-Build Docker Image:
-
+🐳 Docker Setup
+Build Docker Image
 docker build -t aceest-gym .
-
-Run Docker Container:
-
+Run Docker Container
 docker run -p 5000:5000 aceest-gym
 
-The application will be available at:
+Access at: http://localhost:5000
 
-http://localhost:5000
+Docker Optimization
 
-Docker Optimization:
+Base image: python:3.10-slim (smaller size)
 
-Base image: python:3.10-slim for smaller image size
+Dependencies installed with --no-cache-dir
 
-Dependencies installed using --no-cache-dir
+Working directory: /app
 
-Working directory set to /app
+Exposed port: 5000
 
-Exposed port 5000 for Flask
-
-Environment variables for Flask factory app:
+Environment variables:
 
 FLASK_APP=aceest_gym.app.app:create_app
-
 FLASK_RUN_HOST=0.0.0.0
-
 FLASK_ENV=production
+🌿 Version Control Workflow
 
-Version Control Workflow
+Feature development: Separate branches
 
-Feature development is done on separate branches
+Commit messages: Descriptive and structured
 
-Commits are descriptive and logically structured:
+Example:
 
 Add Flask route for status endpoint
 
@@ -133,19 +102,17 @@ Add Pytest coverage for home endpoint
 
 Add Dockerfile for containerization
 
-Merges to the main branch occur after tests pass
+Merges to main branch occur only after tests pass
 
-Testing Coverage
+🧪 Testing Coverage
 
-Pytest framework is used for unit testing
-
-Core tests cover:
+Core endpoints tested:
 
 Home endpoint /
 
 Status endpoint /status
 
-Fixtures (Flask test client) are used for consistent testing
+Fixtures (Flask test client) used for consistent testing
 
 Tests run automatically in GitHub Actions CI workflow
 
@@ -155,12 +122,10 @@ def test_home(client):
     rv = client.get("/")
     assert rv.status_code == 200
     assert rv.get_json() == {"message": "ACEest Gym DevOps API running"}
-CI/CD Pipeline Overview
-GitHub Actions Integration
+⚙️ CI/CD Pipeline Overview
+GitHub Actions
 
-Triggered on every push or pull request
-
-Steps:
+Triggered on every push or pull request:
 
 Checkout repository
 
@@ -172,11 +137,9 @@ Run Pytest
 
 Build Docker image using official Docker Action
 
-Jenkins Pipeline Integration
+Jenkins Pipeline
 
-Jenkins pipeline configured to automate project build verification
-
-Pipeline workflow:
+Automates project build verification:
 
 Developer Push Code
        ↓
@@ -190,32 +153,23 @@ Run Build Steps
        ↓
 Pipeline Execution Result
 
-Ensures builds succeed and code quality is validated after every change
+Ensures builds succeed and code quality is validated after every change.
 
-System Architecture
+🏗 System Architecture
 
-The CI/CD architecture consists of three major layers:
+Layers:
 
-Source Control Layer: GitHub repository hosting the project code
+Source Control: GitHub repository
 
-Automation Layer: GitHub Actions and Jenkins monitor repository changes and trigger pipelines
+Automation: GitHub Actions & Jenkins pipelines
 
-Execution Layer: Pipeline stages execute dependency installation, test execution, and build verification
+Execution: Dependency installation, test execution, build verification
 
-Architecture Flow:
+Flow:
 
-Developer
-   ↓
-GitHub Repository
-   ↓
-CI Pipeline (GitHub Actions)
-   ↓
-Automated Tests
-   ↓
-Jenkins Pipeline
-   ↓
-Build Validation
-Future Improvements
+Developer → GitHub Repository → CI Pipeline (GitHub Actions) 
+→ Automated Tests → Jenkins Pipeline → Build Validation
+🔮 Future Improvements
 
 Automatic Docker image publishing to DockerHub
 
@@ -225,8 +179,9 @@ Integration with monitoring tools
 
 Automated production deployment
 
-Security scanning and vulnerability checks
+Security scanning & vulnerability checks
 
-Conclusion
+📌 Conclusion
 
-This project demonstrates a professional CI/CD pipeline for a Flask-based application using modern DevOps tools. The integration of GitHub, Jenkins, automated testing, and Docker enables a reliable and automated development workflow.
+This project demonstrates a professional CI/CD pipeline for a Flask-based application.
+The integration of GitHub, Jenkins, automated testing, and Docker enables a reliable, automated, and modern development workflow.
