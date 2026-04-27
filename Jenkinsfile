@@ -1,27 +1,52 @@
 pipeline {
-
     agent any
+
+    environment {
+        IMAGE_NAME = "yourdockerhub/aceest-gym"
+    }
 
     stages {
 
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/2024tm93535/aceest-gym.git'
+                git 'https://github.com/2024tm93535/aceest-gym.git'
             }
         }
 
-        stage('Build Step') {
+        stage('Install Dependencies') {
             steps {
-                sh 'echo "Building Aceest Gym Project..."'
+                sh 'pip install -r requirements.txt'
             }
         }
 
-        stage('Finish') {
+        stage('Run Tests') {
             steps {
-                sh 'echo "Pipeline executed successfully!"'
+                sh 'pytest --cov=aceest_gym tests/'
             }
         }
 
+        stage('SonarQube Scan') {
+            steps {
+                sh 'sonar-scanner'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                sh 'docker push $IMAGE_NAME:$BUILD_NUMBER'
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/'
+            }
+        }
     }
-
 }
