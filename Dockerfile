@@ -8,6 +8,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+ENV PORT=5000
+
 EXPOSE 5000
 
-CMD ["python", "aceest_gym/app/app.py"]
+HEALTHCHECK CMD curl --fail http://localhost:5000/ || exit 1
+
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "aceest_gym.app:app"]
