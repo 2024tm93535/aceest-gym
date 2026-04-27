@@ -57,7 +57,7 @@ def get_members():
 @gym_routes.route("/members/<member_id>", methods=["GET"])
 def get_member(member_id):
 
-    member = members_collection.find_one({"_id": member_id})
+    member = members_collection.find_one({"_id": ObjectId(member_id)})
 
     if member:
         member["_id"] = str(member["_id"])
