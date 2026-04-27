@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aceest-gym
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: aceest-gym
+
+  template:
+    metadata:
+      labels:
+        app: aceest-gym
+
+    spec:
+      containers:
+      - name: aceest-gym
+        image: yourdockerhub/aceest-gym:v1
+        ports:
+        - containerPort: 5000
