@@ -1,6 +1,7 @@
 Flask
 pymongo
-pytest
-requests
 gunicorn
-python-dotenv
+requests
+pytest
+pytest-cov
+coverage
