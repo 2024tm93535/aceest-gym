@@ -5,39 +5,40 @@ from bson.objectid import ObjectId
 
 gym_routes = Blueprint("gym_routes", __name__)
 
+@gym_routes.route("/", methods=["GET"])
+def home():
+    return {"message": "ACEest Gym API running"}, 200
+
 # Add Member
 @gym_routes.route("/members", methods=["POST"])
 def add_member():
+    data = request.get_json()
 
-    data = request.json
+    membership_type = data.get("membership")
 
-    expiry_date = datetime.now() + timedelta(days=30)
-
-    member = {
-        "name": data["name"],
-        "age": data["age"],
-        "weight": data["weight"],
-        "height": data["height"],
-        "membership": data["membership"]
-    }
-
-    membership_type = data["membership"]
     if membership_type == "Basic":
         expiry_days = 30
     elif membership_type == "Gold":
         expiry_days = 90
     elif membership_type == "Premium":
-     expiry_days = 180
+        expiry_days = 180
     else:
         expiry_days = 30
 
     expiry_date = datetime.now() + timedelta(days=expiry_days)
 
-    member["expiry"] = expiry_date
+    member = {
+        "name": data.get("name"),
+        "age": data.get("age"),
+        "weight": data.get("weight"),
+        "height": data.get("height"),
+        "membership": membership_type,
+        "expiry": expiry_date
+    }
 
     members_collection.insert_one(member)
 
-    return {"message": "Member added successfully"}
+    return {"message": "Member added successfully"}, 201
 
 
 # Get All Members
@@ -123,21 +124,27 @@ def calculate_bmi():
 @gym_routes.route("/membership/expired", methods=["GET"])
 def expired_members():
 
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now()
 
     expired = []
 
     for m in members_collection.find():
 
-        if m["expiry"] < today:
+        expiry = m.get("expiry")
+
+        # If expiry stored as string, convert to datetime
+        if isinstance(expiry, str):
+            expiry = datetime.strptime(expiry, "%Y-%m-%d")
+
+        if expiry < today:
             m["_id"] = str(m["_id"])
             expired.append(m)
 
-    return expired
+    return expired, 200
 
 
 # Workout Progress
-@gym_routes.route("/progress/<member_id>")
+@gym_routes.route("/progress/<member_id>", methods=["GET"])
 def member_progress(member_id):
 
     workouts = workouts_collection.find({"member_id": member_id})
